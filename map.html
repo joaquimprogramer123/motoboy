@@ -432,41 +432,37 @@
 
 
 <script>
-    // Função para obter parâmetros da URL
-    function obterParametroURL(nomeParametro) {
-        var urlSearchParams = new URLSearchParams(window.location.search);
-        return urlSearchParams.get(nomeParametro);
+    // Função para obter os parâmetros da URL
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
     }
-
-    // Função para extrair e processar os parâmetros da URL
-    function processarParametrosURL() {
-        // Extrair os parâmetros da URL
-        var nome = obterParametroURL("nome");
-        var sobrenome = obterParametroURL("sobrenome");
-        var celular = obterParametroURL("celular");
-        var enderecoColeta = obterParametroURL("enderecoColeta");
-        var enderecoEntrega = obterParametroURL("enderecoEntrega");
-        
-        // Criar objeto com os dados capturados
-        var dadosCapturados = {
-            nome: nome,
-            sobrenome: sobrenome,
-            celular: celular,
-            enderecoColeta: enderecoColeta,
-            enderecoEntrega: enderecoEntrega
-        };
-
-        // Adicionar os dados capturados diretamente ao corpo da página
-        var scriptTag = document.createElement('script');
-        scriptTag.innerHTML = `var dadosCapturados = ${JSON.stringify(dadosCapturados)};`;
-        document.body.appendChild(scriptTag);
-    }
-
-    // Chamar a função para processar os parâmetros da URL quando a página é carregada
-    window.onload = function() {
-        processarParametrosURL();
+    
+    // Obter os valores dos parâmetros da URL
+    var nome = getParameterByName('nome');
+    var sobrenome = getParameterByName('sobrenome');
+    var celular = getParameterByName('celular');
+    var enderecoColeta = getParameterByName('enderecoColeta');
+    var enderecoEntrega = getParameterByName('enderecoEntrega');
+    
+    // Criar um objeto com os dados
+    var dadosPedido = {
+        nome: nome,
+        sobrenome: sobrenome,
+        celular: celular,
+        enderecoColeta: enderecoColeta,
+        enderecoEntrega: enderecoEntrega
     };
+    
+    // Exemplo de uso dos dados
+    console.log(dadosPedido);
 </script>
+
 
 
 
