@@ -182,7 +182,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="strip_list">
+                <div class="strip_list" id="dadosdecoleta">
 				<div class="ribbon_1">
 					Popular
 				</div>
@@ -200,7 +200,7 @@
 								Italian / Pizza
 							</div>
 							<div class="location">
-								135 Newtownards Road, Belfast, BT4. <span class="opening">Opens at 17:00.</span> Minimum order: $15
+								coloque o endereço de coleta aqui <span class="opening">Opens at 17:00.</span> Minimum order: $15
 							</div>
 							<ul>
 								<li>Take away<i class="icon_check_alt2 ok"></i></li>
@@ -430,37 +430,47 @@
 <script src="js/functions.js"></script>
 <script src="assets/validate.js"></script>
 
-<!-- SPECIFIC SCRIPTS -->
-<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAs_JyKE9YfYLSQujbyFToZwZy-wc09w7s"></script>
-<script src="js/map_listing.js">
-	
-	function initializeMap() {
-    // Seu código de inicialização do mapa aqui
-    // Certifique-se de chamar esta função após o carregamento da API do Google Maps
-}
 
-// Restante do código no seu arquivo map_listing.js
-
-</script>
-<script src="js/infobox.js"></script>
-<script src="js/ion.rangeSlider.js"></script>
 <script>
-    $(function () {
-		 'use strict';
-        $("#range").ionRangeSlider({
-            hide_min_max: true,
-            keyboard: true,
-            min: 0,
-            max: 15,
-            from: 0,
-            to:5,
-            type: 'double',
-            step: 1,
-            prefix: "Km ",
-            grid: true
-        });
-    });
+    // Função para obter parâmetros da URL
+    function obterParametroURL(nomeParametro) {
+        var urlSearchParams = new URLSearchParams(window.location.search);
+        return urlSearchParams.get(nomeParametro);
+    }
+
+    // Função para extrair e processar os parâmetros da URL
+    function processarParametrosURL() {
+        // Extrair os parâmetros da URL
+        var nome = obterParametroURL("nome");
+        var sobrenome = obterParametroURL("sobrenome");
+        var celular = obterParametroURL("celular");
+        var enderecoColeta = obterParametroURL("enderecoColeta");
+        var enderecoEntrega = obterParametroURL("enderecoEntrega");
+        
+        // Criar objeto com os dados capturados
+        var dadosCapturados = {
+            nome: nome,
+            sobrenome: sobrenome,
+            celular: celular,
+            enderecoColeta: enderecoColeta,
+            enderecoEntrega: enderecoEntrega
+        };
+
+        // Adicionar os dados capturados diretamente ao corpo da página
+        var scriptTag = document.createElement('script');
+        scriptTag.innerHTML = `var dadosCapturados = ${JSON.stringify(dadosCapturados)};`;
+        document.body.appendChild(scriptTag);
+    }
+
+    // Chamar a função para processar os parâmetros da URL quando a página é carregada
+    window.onload = function() {
+        processarParametrosURL();
+    };
 </script>
+
+
+
+
 
 </body>
 </html>
