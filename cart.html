@@ -493,48 +493,44 @@
     });
 </script>
 
-<!-- SCRIPT QUE PEGA OS DADOS E ARMAZENA ELES NO MAP.HTML -->
+
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("botao").addEventListener("click", function(event) {
-            event.preventDefault(); // Evita o comportamento padrão do link
+            event.preventDefault(); // Evita o comportamento padrão do botão
             
-            // Pegar os valores dos campos
+            // Pegar os valores dos campos do formulário
             var nome = document.getElementById("firstname_order").value;
             var sobrenome = document.getElementById("lastname_order").value;
             var celular = document.getElementById("tel_order").value;
             var enderecoColeta = document.getElementById("coleta").value;
             var enderecoEntrega = document.getElementById("entrega").value;
             
-            // Construir o código JavaScript para armazenar os dados
-            var codigoJS = `
-                var dadosPedido = {
-                    nome: "${nome}",
-                    sobrenome: "${sobrenome}",
-                    celular: "${celular}",
-                    enderecoColeta: "${enderecoColeta}",
-                    enderecoEntrega: "${enderecoEntrega}"
-                };
-            `;
+            // Construir o URL para redirecionar para map.html com os parâmetros na URL
+            var url = "map.html?" +
+                      "nome=" + encodeURIComponent(nome) +
+                      "&sobrenome=" + encodeURIComponent(sobrenome) +
+                      "&celular=" + encodeURIComponent(celular) +
+                      "&enderecoColeta=" + encodeURIComponent(enderecoColeta) +
+                      "&enderecoEntrega=" + encodeURIComponent(enderecoEntrega);
             
-            // Criar um elemento script
-            var scriptElement = document.createElement('script');
-            
-            // Definir o conteúdo do script
-            scriptElement.innerHTML = codigoJS;
-            
-            // Adicionar o elemento script ao corpo do documento
-            document.body.appendChild(scriptElement);
-
-          // Redirecionamento para map.html com os dados como parâmetros na URL
-          window.location.href = "map.html?nome=" + encodeURIComponent(nome) + "&sobrenome=" + encodeURIComponent(sobrenome) + "&celular=" + encodeURIComponent(celular) + "&enderecoColeta=" + encodeURIComponent(enderecoColeta) + "&enderecoEntrega=" + encodeURIComponent(enderecoEntrega);
-           });
-   
+            // Redirecionar para map.html com os dados na URL
+            window.location.href = url;
+        });
     });
 </script>
 
 
 
 
+
+
+
+
 </body>
 </html>
+
+
+
+
+
